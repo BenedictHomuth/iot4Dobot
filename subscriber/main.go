@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -32,14 +33,28 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OK")
 }
 
+func wsConncetionString(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getEnv(key, fallback string) string {
+	value, exists := os.LookupEnv(key)
+	if !exists {
+		value = fallback
+	}
+	return value
+}
+
 func main() {
 	fmt.Println("Starting server on port :8080")
+
+	// Getting environment vars
+	natsHost := getEnv("NATS_CONN_STRING", nats.DefaultURL)
+
 	// Connect to NATS message queue
-	// nc, err := nats.Connect(nats.DefaultURL)
-	// nc, err := nats.Connect("91.107.199.56:4222")
-	nc, err := nats.Connect("65.109.172.100:4222")
+	nc, err := nats.Connect(natsHost)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error while connecting to nats!", err)
 	} else {
 		fmt.Println("Successfully found nats server")
 	}
@@ -52,20 +67,21 @@ func main() {
 	http.HandleFunc("/websocket", func(w http.ResponseWriter, r *http.Request) {
 		conn, err := upgrader.Upgrade(w, r, nil)
 		if err != nil {
-			panic(err)
+			fmt.Println("Error while connecting the ws conn!", err)
 		}
 		defer conn.Close()
+
 		ch := make(chan *nats.Msg, 64)
 		sub, err := nc.ChanSubscribe("roboPos", ch)
 		if err != nil {
-			panic(err)
+			fmt.Println("Error while creating nats channel subscription!", err)
 		}
 
 		for event := range ch {
 			var posEvent RoboEvent
 			err = json.Unmarshal(event.Data, &posEvent)
 			if err != nil {
-				panic(err)
+				fmt.Println("Error while unmarshaling a event message", err)
 			}
 			fmt.Println(posEvent)
 			time.Sleep(500 * time.Millisecond)
@@ -88,6 +104,6 @@ func main() {
 	// Start HTTP server
 	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error while serving the api!", err)
 	}
 }
