@@ -65,7 +65,15 @@ func main() {
 
 	// Set up websocket handler
 	http.HandleFunc("/websocket", func(w http.ResponseWriter, r *http.Request) {
+		var upgrader = websocket.Upgrader{
+			ReadBufferSize:  4096,
+			WriteBufferSize: 4096,
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
+		}
 		conn, err := upgrader.Upgrade(w, r, nil)
+
 		if err != nil {
 			fmt.Println("Error while connecting the ws conn!", err)
 		}
