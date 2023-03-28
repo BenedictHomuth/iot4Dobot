@@ -11,7 +11,7 @@ ENV CGO_ENABLED=0
 RUN go build -o backend-server main.go && chmod +x ./backend-server
 
 FROM scratch
-LABEL org.opencontainers.image.source https://github.com/benedicthomuth/iot4Dobot
+LABEL org.opencontainers.image.source https://github.com/benedicthomuth/iot4dobot
 COPY /frontend /frontend
 COPY --from=builder /iot-app/backend-server backend-server
 ENTRYPOINT [ "./backend-server" ]
