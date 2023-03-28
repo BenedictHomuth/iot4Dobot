@@ -29,4 +29,4 @@ jobs:
           file: docker/Dockerfile.go
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/benedicthomuth/bachelor-thesis/server:latest
+          tags: ghcr.io/benedicthomuth/iot4Dobot/server:latest
