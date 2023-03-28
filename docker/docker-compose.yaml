@@ -1,0 +1,45 @@
+version: '3.9'
+name: "iot-dobot"
+
+volumes:
+  db_data:
+  pgadmin_data:
+
+services:
+  backend:
+    image: nats-iot-test
+    restart: always
+    # hostname: backend
+    ports:
+     - 8080:8080
+  
+  nats: 
+    image: nats:2.9.14
+    restart: always
+    hostname: nats
+    ports:
+      - 8222:8222
+      - 4222:4222
+
+# python_notebook:
+  #   image: advanced_analytics_paper
+  #   restart: always
+  #   hostname: server
+  #   ports:
+  #    - 1337:1337
+  #   command: ["/bin/bash", "-c", "jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=1337 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"]
+  #   volumes:
+  #     - ../notebooks:/opt/notebooks:rw
+  #     - ../html:/opt/notebooks/html:rw
+  
+  # postgis:
+  #   image: postgis/postgis:15-3.3
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=123456
+  #   ports:
+  #     - '5432:5432'
+  #   volumes: 
+  #     - ../go/api-server/db/migration:/docker-entrypoint-initdb.d
+  #     - db_data:/var/lib/postgresql/data
