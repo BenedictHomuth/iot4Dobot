@@ -12,15 +12,15 @@ import (
 )
 
 type RoboEvent struct {
-	X      string       `json:"x"`
-	Y      string       `json:"y"`
-	Z      string       `json:"z"`
-	R      string       `json:"r"`
+	X      float64      `json:"x"`
+	Y      float64      `json:"y"`
+	Z      float64      `json:"z"`
+	R      float64      `json:"r"`
 	Angles JointsAngles `json:"jointAngle"`
 }
 
 type JointsAngles struct {
-	Rotations [4]string
+	Rotations [4]float64
 }
 
 var upgrader = websocket.Upgrader{
@@ -31,10 +31,6 @@ var upgrader = websocket.Upgrader{
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "OK")
-}
-
-func wsConncetionString(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func getEnv(key, fallback string) string {
