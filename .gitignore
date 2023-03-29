@@ -1,4 +1,5 @@
 secrets.tf
+requestCert.txt
 
 # Local .terraform directories
 **/.terraform/*

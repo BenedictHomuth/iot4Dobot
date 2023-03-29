@@ -14,4 +14,6 @@ FROM scratch
 LABEL org.opencontainers.image.source https://github.com/benedicthomuth/iot4dobot
 COPY /frontend /frontend
 COPY --from=builder /iot-app/backend-server backend-server
+COPY /subscriber/domain.crt .
+COPY /subscriber/domain.key .
 ENTRYPOINT [ "./backend-server" ]

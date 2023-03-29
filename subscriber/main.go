@@ -73,7 +73,6 @@ func main() {
 			},
 		}
 		conn, err := upgrader.Upgrade(w, r, nil)
-
 		if err != nil {
 			fmt.Println("Error while connecting the ws conn!", err)
 		}
@@ -110,7 +109,7 @@ func main() {
 	http.Handle("/", fs)
 
 	// Start HTTP server
-	err = http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServeTLS(":8080", "domain.crt", "domain.key", nil)
 	if err != nil {
 		fmt.Println("Error while serving the api!", err)
 	}

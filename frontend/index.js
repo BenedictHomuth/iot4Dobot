@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://localhost:8080/websocket")
+const socket = new WebSocket("wss://localhost:8080/websocket")
 sendBtn = document.querySelector("#test")
 
 sendBtn.addEventListener("click", () =>{
