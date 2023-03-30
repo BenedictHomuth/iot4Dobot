@@ -12,15 +12,11 @@ import (
 )
 
 type RoboEvent struct {
-	X      float64      `json:"x"`
-	Y      float64      `json:"y"`
-	Z      float64      `json:"z"`
-	R      float64      `json:"r"`
-	Angles JointsAngles `json:"jointAngle"`
-}
-
-type JointsAngles struct {
-	Rotations [4]float64
+	X           float64   `json:"x"`
+	Y           float64   `json:"y"`
+	Z           float64   `json:"z"`
+	R           float64   `json:"r"`
+	JointAngles []float64 `json:"jointAngles"`
 }
 
 var upgrader = websocket.Upgrader{
@@ -58,6 +54,28 @@ func main() {
 
 	// Health endpoint
 	http.HandleFunc("/health", healthHandler)
+
+	// Incoming Event, publish to NATS
+	http.HandleFunc("/event", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+			return
+		}
+		var event RoboEvent
+		err := json.NewDecoder(r.Body).Decode(&event)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		jEvent, err := json.Marshal(event)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		nc.Publish("roboPos", jEvent)
+
+		w.WriteHeader(http.StatusOK)
+	})
 
 	// Set up websocket handler
 	http.HandleFunc("/websocket", func(w http.ResponseWriter, r *http.Request) {
