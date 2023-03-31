@@ -12,7 +12,7 @@ RUN go build -o backend-server main.go && chmod +x ./backend-server
 
 FROM scratch
 LABEL org.opencontainers.image.source https://github.com/benedicthomuth/iot4dobot
-COPY /frontend /frontend
+COPY /early-dev-frontend /frontend
 COPY --from=builder /iot-app/backend-server backend-server
 COPY /subscriber/domain.crt .
 COPY /subscriber/domain.key .
