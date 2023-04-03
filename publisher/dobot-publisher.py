@@ -13,7 +13,7 @@ def buildJsonRequest(poseData):
                          0, # joint rotation j3 -> z-axis position
                          0 # joint rotation j4 -> end effector
                        ]
-   }
+    }
 
     # Assign cartesian values
     roboEvent["x"] = poseData[0]
