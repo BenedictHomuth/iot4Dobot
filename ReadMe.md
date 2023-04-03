@@ -1,4 +1,4 @@
-# Digital Dobot Twin Project
+# Digital Twin Project (Dobot M1)
 
 <p>
     <a href="https://github.com/benedicthomuth/iot4dobot/actions/workflows/backend.yaml">
