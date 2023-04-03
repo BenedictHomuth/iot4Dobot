@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/gorilla/websocket"
 	"github.com/nats-io/nats.go"
@@ -105,7 +104,6 @@ func main() {
 				fmt.Println("Error while unmarshaling a event message", err)
 			}
 			fmt.Println(posEvent)
-			time.Sleep(500 * time.Millisecond)
 
 			// Send message data to websocket client
 			err = conn.WriteJSON(posEvent)
