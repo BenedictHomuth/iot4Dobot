@@ -3,7 +3,9 @@ module iot4dobot
 go 1.18
 
 require (
+	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/gorilla/websocket v1.5.0
+	github.com/lib/pq v1.10.9
 	github.com/nats-io/nats.go v1.24.0
 )
 
