@@ -3,7 +3,7 @@ name: CI for the backend go server
 on:
   push:
     branches:
-      - main
+      - bh/1.0
 env:
   REGISTRY: ghcr.io
 jobs:
