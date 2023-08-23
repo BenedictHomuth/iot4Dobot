@@ -62,7 +62,7 @@ func main() {
 	}
 	defer nc.Close()
 
-	// Database stuff
+	// Database stuff -v1
 	// Connect to the CockroachDB database
 	// conString := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=insecure", dbUser, dbPassword, dbHostname, dbPort, dbDatabaseName)
 	conString := fmt.Sprintf("postgresql://%s@%s:%s?sslmode=disable", dbUser, dbHostname, dbPort)
