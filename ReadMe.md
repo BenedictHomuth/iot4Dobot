@@ -33,5 +33,3 @@ Following this https://nodeployfriday.com/posts/self-signed-cert/ tutorial the c
 The following cert is then integrated into the docker container. This is NOT SAFE for production and is only used as a first prototype.
 
 When the Hetzner IP changes it might be neccessary to add the new IP to the "/subscriber/requestCert.txt". This must then be published and run through the GitHub Action Workflow in order to have a new container.
-
-my unsuposed change
